@@ -3,6 +3,8 @@ namespace Symfony\Service;
 
 class Service {
 
+    // no
+
     /**
      * @var Services
      */
