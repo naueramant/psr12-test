@@ -16,13 +16,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install dependencies
-        run: |
-          composer global require squizlabs/php_codesniffer staabm/annotate-pull-request-from-checkstyle
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: phpcs, cs2pr
 
       - name: Run PHP CodeSniffer
         run: |
           files=$(git diff-tree --pretty="" --name-only --no-commit-id --diff-filter=d -r ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -- '**.php')
           if [ ! -z "$files" ]; then
-              php phpcs.phar --report=checkstyle --standard=PSR12 $files | cs2pr
+              phpcs--report=checkstyle --standard=PSR12 $files | cs2pr
           fi
