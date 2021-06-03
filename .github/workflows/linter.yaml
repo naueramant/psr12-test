@@ -18,8 +18,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require staabm/annotate-pull-request-from-checkstyle
-          composer global require "squizlabs/php_codesniffer=*"
+          composer global require squizlabs/php_codesniffer staabm/annotate-pull-request-from-checkstyle
 
       - name: Run PHP CodeSniffer
         run: |
