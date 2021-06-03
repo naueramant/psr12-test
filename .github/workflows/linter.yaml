@@ -16,14 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install PHP CodeSniffer
+      - name: Install dependencies
         run: |
-          curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-          php phpcs.phar --version
+          composer require staabm/annotate-pull-request-from-checkstyle
+          composer global require "squizlabs/php_codesniffer=*"
 
       - name: Run PHP CodeSniffer
         run: |
           files=$(git diff-tree --pretty="" --name-only --no-commit-id --diff-filter=d -r ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -- '**.php')
           if [ ! -z "$files" ]; then
-              php phpcs.phar --report=checkstyle --standard=PSR12 $files > phpcs_checks.xml
+              php phpcs.phar --report=checkstyle --standard=PSR12 $files | cs2pr
           fi
