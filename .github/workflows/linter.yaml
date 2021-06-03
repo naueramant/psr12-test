@@ -22,8 +22,5 @@ jobs:
           php phpcs.phar --version
 
       - name: Run PHP CodeSniffer
-        uses: tinovyatkin/action-php-codesniffer@v1
-        with:
-          files: "**.php"
-          phpcs_path: php phpcs.phar
-          standard: PSR12
+        run: |
+          git show --pretty="" --name-only -- '**.php' | xargs php phpcs.phar --standard=PSR12
