@@ -23,7 +23,8 @@ jobs:
 
       - name: Run PHP CodeSniffer
         run: |
-          files=$(git show --pretty="" --name-only -- '**.php')
+          files=$(git diff-tree --no-commit-id --name-status --diff-filter=d -r ${{ github.event.pull_request.base.sha }}..${{ github.event.after }})
+          echi $files
           if [ ! -z "$files" ]; then
-              php phpcs.phar --standard=PSR12 $files
+              phpcs --standard=PSR12 $files
           fi
