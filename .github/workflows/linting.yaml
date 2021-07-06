@@ -1,0 +1,30 @@
+name: Linting
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  PSR12: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: phpcs, cs2pr
+
+      - name: Run PHP CodeSniffer
+        run: |
+          files=$(git diff-tree --pretty="" --name-only --no-commit-id --diff-filter=d -r ${{ github.event.pull_request.base.sha }}..${{ github.event.after }} -- '**.php')
+          if [ ! -z "$files" ]; then
+              phpcs --report=checkstyle --standard=PSR12 $files | cs2pr --prepend-source
+          fi
