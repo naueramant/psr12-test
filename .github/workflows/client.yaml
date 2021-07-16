@@ -22,22 +22,22 @@ jobs:
           always-auth: true
           scope: '@uniwise'
 
-      - name: Install dependencies
+      - name: Install client dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
+      - name: Generate client
         run: yarn build
       
       - name: Install yq 
-        uses: mikefarah/yq@v4.10.0
+        run: brew install yq
       
-      - name: Version
+      - name: Set new version
         run: |
           new_version=$(cat ../docs/v1.yaml | yq .info.version)
           echo "New version\: $new_version"  
           yarn version --new-version "$new_version" --no-git-tag-version
 
-      - name: Publish
+      - name: Publish client
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
