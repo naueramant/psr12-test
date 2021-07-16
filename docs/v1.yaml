@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   description: XFDF Annotation management for assessments in WISEflow
   title: Annotations
-  version: 1.0.0
+  version: 0.0.1
 servers:
   - url: https://api.eu.wiseflow.io/annotations
     description: Production
