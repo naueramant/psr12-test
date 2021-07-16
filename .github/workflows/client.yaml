@@ -1,9 +1,9 @@
 name: Publish client
 
-on:
-  push:
-    paths:
-      - 'docs/v1.yaml'
+on: push
+  # push:
+  #   paths:
+  #     - 'docs/v1.yaml'
 
 jobs:
   publish: 
