@@ -29,15 +29,20 @@ jobs:
         run: yarn build
       
       - name: Install yq 
-        run: brew install yq
+        run: brew install yq jq
       
-      - name: Set new version
-        run: |
-          new_version=$(cat ../docs/v1.yaml | yq eval '.info.version' -)
-          echo "New version: $new_version"  
-          yarn version --new-version "$new_version" --no-git-tag-version
-
-      - name: Publish client
-        run: yarn publish
+      - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          latest_version=$(yarn info @uniwise/changelog --json | jq '.data."dist-tags".latest')
+          new_version=$(cat ../docs/v1.yaml | yq eval '.info.version' -)
+          
+          if [ "$latest_version" = "$new_version" ]; then
+            echo "Version already published"
+            exit 0
+          fi
+
+          echo "New version: $new_version"  
+          yarn version --new-version "$new_version" --no-git-tag-version
+          yarn publish

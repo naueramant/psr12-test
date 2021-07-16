@@ -1,6 +1,6 @@
 {
-  "name": "@uniwise/changelog",
-  "version": "0.0.0",
+  "name": "@uniwise/annotations",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "UNLICENSED",
