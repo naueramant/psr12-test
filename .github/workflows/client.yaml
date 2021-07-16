@@ -31,8 +31,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - uses: mikefarah/yq@v4.10.0
+      
       - name: Version
-        uses: mikefarah/yq@v4.10.0
         run: |
           new_version=$(cat ../docs/v1.yaml | yq .info.version)
           echo "New version\: $new_version"  
