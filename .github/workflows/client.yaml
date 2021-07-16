@@ -5,7 +5,7 @@ on:
     branches:
       - "master"
     paths: 
-      - ../docs/v1.yaml
+      - "./docs/v1.yaml"
 
 jobs:
   publish: 
