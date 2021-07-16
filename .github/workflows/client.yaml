@@ -33,7 +33,7 @@ jobs:
       
       - name: Set new version
         run: |
-          new_version=$(cat ../docs/v1.yaml | yq .info.version)
+          new_version=$(cat ../docs/v1.yaml | yq -r '.info.version')
           echo "New version\: $new_version"  
           yarn version --new-version "$new_version" --no-git-tag-version
 
