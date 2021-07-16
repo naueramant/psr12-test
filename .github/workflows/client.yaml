@@ -29,7 +29,7 @@ jobs:
         run: yarn build
       
       - name: Install yq 
-      - uses: mikefarah/yq@v4.10.0
+        uses: mikefarah/yq@v4.10.0
       
       - name: Version
         run: |
