@@ -2,15 +2,12 @@ name: Publish client
 
 on: 
   push:
-    branches:
-      - "master"
     paths: 
       - "./docs/v1.yaml"
 
 jobs:
   publish: 
     runs-on: ubuntu-latest
-    if: "!github.event.release.prerelease"
     defaults:
       run:
         working-directory: ./client
