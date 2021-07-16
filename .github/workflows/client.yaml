@@ -1,0 +1,41 @@
+name: Publish client
+
+on: 
+  release:
+    types:
+      - released
+      - edited
+
+jobs:
+  publish: 
+    runs-on: ubuntu-latest
+    if: "!github.event.release.prerelease"
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15.x'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: true
+          scope: '@uniwise'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Version
+        run: |
+          echo "New version\: ${GITHUB_REF:11}"  
+          yarn version --new-version "${GITHUB_REF:11}" --no-git-tag-version
+
+      - name: Publish
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

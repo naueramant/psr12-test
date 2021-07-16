@@ -1,0 +1,105 @@
+openapi: "3.0.0"
+info:
+  description: XFDF Annotation management for assessments in WISEflow
+  title: Annotations
+  version: 1.0.0
+servers:
+  - url: https://api.eu.wiseflow.io/annotations
+    description: Production
+  - url: https://api.stage.eu.wiseflow.io/annotations
+    description: Staging
+  - url: https://api.test.eu.wiseflow.io/annotations
+    description: Testing
+  - url: "{scheme}://{host}{base}"
+    description: Custom
+    variables:
+      scheme:
+        default: "http"
+        enum:
+          - "http"
+          - "https"
+      host:
+        default: "localhost:8081"
+      base:
+        default: ""
+paths:
+  /v1/file/{file}/author/{author}/xfdf:
+    parameters:
+      - schema:
+          type: string
+        description: File identifier
+        name: file
+        in: path
+        required: true
+      - schema:
+          type: string
+        description: Author identifier
+        name: author
+        in: path
+        required: true
+    get:
+      tags:
+        - XFDF
+      responses:
+        "200":
+          description: "Successful"
+          content:
+            application/xml: {}
+        "404":
+          description: "No XFDF for provided author and file identifier combination"
+  /v1/file/{file}/author/{author}/annotation/{annotation}:
+    parameters:
+      - schema:
+          type: string
+        description: File identifier
+        name: file
+        in: path
+        required: true
+      - schema:
+          type: string
+        description: Author identifier
+        name: author
+        in: path
+        required: true
+      - schema:
+          type: string
+        description: Annotation identifier
+        name: annotation
+        in: path
+        required: true
+    get:
+      tags:
+        - Annotations
+      responses:
+        "200":
+          description: "Successful"
+          content:
+            application/xml: {}
+        "404":
+          description: "No such annotation"
+    post:
+      tags:
+        - Annotations
+      responses:
+        "200":
+          description: "Successful"
+        "400":
+          description: "Bad request"
+        "415":
+          description: "Body not valid XML"
+    put:
+      tags:
+        - Annotations
+      responses:
+        "200":
+          description: "Successful"
+        "404":
+          description: "No such annotation"
+    delete:
+      tags:
+        - Annotations
+      responses:
+        "200":
+          description: "Successful"
+        "404":
+          description: "No such annotation"

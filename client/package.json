@@ -1,0 +1,19 @@
+{
+  "name": "@uniwise/changelog",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "swagger-typescript-api --js -p ../docs/v1.yaml -o ./dist -n index.ts"
+  },
+  "files": [
+    "./dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "devDependencies": {
+    "swagger-typescript-api": "^9.1.2"
+  }
+}
